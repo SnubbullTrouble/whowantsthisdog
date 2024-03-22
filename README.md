@@ -94,10 +94,12 @@ yarn start
 
 To stop the server, use <kbd>Ctrl</kbd> + <kbd>C</kbd>.
 
-## USing DOcker to containerize while working 
+## Using Docker to containerize while working 
 
 To spin up a docker image of the application, use the docker-compose.yml file by running
 ```
 docker-compose up --build --force-recreate
 ```
+Then, you can edit the program and it will keep compiling your code just like the yarn dev build
+
 DISCLAIMER: You may need to run the yarn install first, but I need to test some more to confirm
