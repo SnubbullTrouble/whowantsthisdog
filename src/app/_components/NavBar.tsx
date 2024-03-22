@@ -62,7 +62,7 @@ const Navbar = ({ user }: Props) => {
           variant="h6"
           sx={{ display: { xs: "none", sm: "block" } }}
         >
-          Who Wants this Dog?
+          Macon Pet Finder
         </Typography>
         <Search>
           <InputBase placeholder="Search..." />
