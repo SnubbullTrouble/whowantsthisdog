@@ -102,4 +102,4 @@ docker-compose up --build --force-recreate
 ```
 Then, you can edit the program and it will keep compiling your code just like the yarn dev build
 
-DISCLAIMER: You may need to run the yarn install first, but I need to test some more to confirm
+DISCLAIMER: You MUST change into the directory of the app and run the `yarn install` command before running the docker-compose command. 
