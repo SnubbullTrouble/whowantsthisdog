@@ -1,90 +1,84 @@
-import { Mail, Notifications } from "@mui/icons-material";
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  Box,
-  Grid,
-  InputBase,
-  Menu,
-  MenuItem,
-  styled,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Avatar, Badge, Box, IconButton, InputBase, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
-import type User from "./User";
+import User from "./User";
+import LoginModal from "./LoginModal";
+import { Mail, Notifications, Search as SearchIcon } from "@mui/icons-material";
 import Link from "next/link";
-
-const StyledToolbar = styled(Toolbar)({
-  display: "flex",
-  justifyContent: "space-between",
-  backgroundColor: "#4F7942",
-});
-
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  width: "40%",
-}));
-
-const Icons = styled(Box)(({ theme }) => ({
-  display: "none",
-  alignItems: "center",
-  gap: "20px",
-  [theme.breakpoints.up("sm")]: {
-    display: "flex",
-  },
-}));
-
-const UserBox = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
-  [theme.breakpoints.up("sm")]: {
-    display: "none",
-  },
-}));
 
 interface Props {
   user: User;
 }
 
-const Navbar = ({ user }: Props) => {
+const Navbar: React.FC<Props> = ({ user }) => {
   const [open, setOpen] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [mailClicked, setMailClicked] = useState(false);
+  const [notificationsClicked, setNotificationsClicked] = useState(false);
+
+  const handleOpenLoginModal = () => {
+    setLoginModalOpen(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setLoginModalOpen(false);
+  };
+
+  const handleMailClick = () => {
+    setMailClicked(true);
+    setTimeout(() => setMailClicked(false), 300); // Reset after 300ms
+  };
+
+  const handleNotificationsClick = () => {
+    setNotificationsClicked(true);
+    setTimeout(() => setNotificationsClicked(false), 300); // Reset after 300ms
+  };
+
   return (
     <AppBar position="sticky">
-      <StyledToolbar>
+      <Toolbar>
         <img src={"logo.png"} width={50} height={50} alt="logo" />
-        <Typography
-          align="left"
-          variant="h6"
-          sx={{ display: { xs: "none", sm: "block" } }}
-        >
+        <Typography align="left" variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
           Macon Pet Finder
         </Typography>
-        <Search>
-          <InputBase placeholder="Search..." />
-        </Search>
-        <Icons>
-          <Badge badgeContent={4} color="error">
-            <Mail />
-          </Badge>
-          <Badge badgeContent={2} color="error">
-            <Notifications />
-          </Badge>
-          <Avatar
-            sx={{ width: 30, height: 30 }}
-            src={user.image}
-            onClick={() => setOpen(true)}
+        <Box sx={{ flexGrow: 1 }} />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: 20,
+            paddingLeft: 2,
+            paddingRight: 2,
+          }}
+        >
+          <SearchIcon />
+          <InputBase
+            placeholder="Search..."
+            sx={{
+              color: "gray",
+              marginLeft: 1,
+              "&::placeholder": { color: "lightgray" },
+            }}
           />
-        </Icons>
-        <UserBox onClick={() => setOpen(true)}>
-          <Avatar sx={{ width: 30, height: 30 }} src={user.image} />
-          <Typography component="span">{user.username}</Typography>
-        </UserBox>
-      </StyledToolbar>
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <Mail />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <Badge badgeContent={2} color="secondary">
+              <Notifications />
+            </Badge>
+          </IconButton>
+          
+          <IconButton color="inherit" onClick={handleOpenLoginModal}>
+            <Avatar sx={{ width: 30, height: 30 }} src={user.image} />
+          </IconButton>
+        </Box>
+      </Toolbar>
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
@@ -99,14 +93,15 @@ const Navbar = ({ user }: Props) => {
           horizontal: "right",
         }}
       >
-        <Link href={"/profile"} passHref legacyBehavior>
+        <Link href={"/profile"} passHref>
           <MenuItem>Profile</MenuItem>
         </Link>
-        <Link href={"/settings"} passHref legacyBehavior>
+        <Link href={"/settings"} passHref>
           <MenuItem>My account</MenuItem>
         </Link>
         <MenuItem>Logout</MenuItem>
       </Menu>
+      <LoginModal open={isLoginModalOpen} onClose={handleCloseLoginModal} />
     </AppBar>
   );
 };
