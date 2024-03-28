@@ -81,7 +81,7 @@ const PopupModal: React.FC<Props> = ({ open, onClose }) => {
               onChange={handlePasswordChange}
             />
             <Typography variant="body2" sx={{ marginTop: 2 }}>
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <MuiLink component="button" onClick={handleToggleForm}>
                 Sign Up Here
               </MuiLink>

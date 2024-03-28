@@ -36,7 +36,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <img src={"logo.png"} width={50} height={50} alt="logo" />
+        <img src={"../../public/logo.png"} width={50} height={50} alt="logo" />
         <Typography align="left" variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
           Macon Pet Finder
         </Typography>
